@@ -1,16 +1,16 @@
 /*
  * Copyright (c) 2015 Martin Sidaway
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
  * the Software without restriction, including without limitation the rights to
  * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
  * of the Software, and to permit persons to whom the Software is furnished to do
  * so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- * 
+ *
  */
 
 #include <libusb.h>
@@ -145,6 +145,15 @@ int main(int argc, char **argv) {
     };
     my_atexit(mypm_terminate, NULL);
 
+    // Check if we're dealing with a port number
+    int isPortNumber = 0;
+    int portNumber = 0;
+    if (chooseDevice == 0)
+    {
+        portNumber = atoi( argv[1] );
+        isPortNumber = (portNumber != 0 || (argv[1][0] == '0' && strlen(argv[1]) == 1));
+    }
+
     int pmdCount = Pm_CountDevices();
     //fprintf(stderr, "Got %d portmidi devices\n", pmdCount);
     PmDeviceID pmDev = -1;
@@ -152,13 +161,15 @@ int main(int argc, char **argv) {
         const PmDeviceInfo *pmdInfo = Pm_GetDeviceInfo(i);
         if (pmdInfo != NULL && pmdInfo->output != 0) {
             if (chooseDevice) {
-                fprintf(stderr, " %d: \"%s\"\n", j, pmdInfo->name);
-            } else if (strcmp(argv[1], pmdInfo->name) == 0) {
+                fprintf(stderr, " %d: \"%s\" (ID = %d)\n", j, pmdInfo->name, i);
+            } else if (strcmp(argv[1], pmdInfo->name) == 0 ||
+                (isPortNumber && (j == portNumber))) {
                 pmDev = i;
             }
             ++j;
         }
     }
+
     if (chooseDevice) {
         fprintf(stderr, "\nPlease type the number of your chosen output MIDI device and press the Enter key.\n\n");
         scanf("%d", &k);
@@ -266,7 +277,7 @@ int main(int argc, char **argv) {
     int8_t curPatch = DEFAULT_PATCH;
     int8_t drumMapOn = 0;
     uint8_t pedalCC = MIDI_CC_EXP;
-    
+
     //struct libusb_transfer transfer;
     //libusb_fill_interrupt_transfer(&transfer, h, endpoint->bEndpointAddress, buffer, DATA_BUFFER_LEN, got_data, NULL, TRANSFER_TIMEOUT);
 
