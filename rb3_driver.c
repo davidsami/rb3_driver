@@ -324,10 +324,10 @@ int main(int argc, char **argv) {
 
                     firstNote = DEFAULT_1STNOTE;
 
-                } else if (upOctPressed && firstNote <= 84) {
-                    firstNote += 12;
-                } else if (downOctPressed && firstNote >= 12) {
-                    firstNote -= 12;
+                } else if (upOctPressed && firstNote <= 72) {
+                    firstNote += 24;
+                } else if (downOctPressed && firstNote >= 24) {
+                    firstNote -= 24;
                 }
 
                 // N.B. assuming OCTAVE_OFFSET == PATCH_OFFSET (to save time)
@@ -413,6 +413,7 @@ int main(int argc, char **argv) {
 
             // Drum split & pedal mode
 
+            /*
             int curDpad = curBuffer[DPAD_OFFSET] & DPAD_MASK;
             int lastDpad = lastBuffer[DPAD_OFFSET] & DPAD_MASK;
             if (curDpad != DPAD_CENTER && curDpad != lastDpad) {
@@ -441,6 +442,7 @@ int main(int argc, char **argv) {
                     pedalCC = newPedalCC;
                 }
             }
+            */
 
             // Pedal value
 
