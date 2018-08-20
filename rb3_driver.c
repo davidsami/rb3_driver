@@ -127,7 +127,7 @@ static inline int keyPressed(const char *curBuffer, const char *lastBuffer,
 
 int main(int argc, char **argv) {
     int r;
-    int i, j, k;
+    int i, output_i, input_i, k;
     int chooseDevice = 0;
 
     if (argc < 2) {
@@ -157,16 +157,24 @@ int main(int argc, char **argv) {
     int pmdCount = Pm_CountDevices();
     //fprintf(stderr, "Got %d portmidi devices\n", pmdCount);
     PmDeviceID pmDev = -1;
-    for (i = 0, j = 1; i < pmdCount; ++i) {
+    for (i = 0, output_i = 1, input_i = 0; i < pmdCount; ++i) {
         const PmDeviceInfo *pmdInfo = Pm_GetDeviceInfo(i);
         if (pmdInfo != NULL && pmdInfo->output != 0) {
             if (chooseDevice) {
-                fprintf(stderr, " %d: \"%s\" (ID = %d)\n", j, pmdInfo->name, i);
-            } else if (strcmp(argv[1], pmdInfo->name) == 0 ||
-                (isPortNumber && (j == portNumber))) {
+                fprintf(stderr, " Output %d: \"%s\" (ID %d)\n", output_i, pmdInfo->name, i);
+            } else if ((strcmp(argv[1], pmdInfo->name) == 0) ||
+                (isPortNumber && (output_i == portNumber))) {
                 pmDev = i;
             }
-            ++j;
+            ++output_i;
+        }
+        else
+        {
+            // Display inputs as well
+            if (chooseDevice) {
+                fprintf(stderr, " Input %d: \"%s\" (ID %d)\n", input_i, pmdInfo->name, i);
+            }
+            ++input_i;
         }
     }
 
@@ -174,14 +182,14 @@ int main(int argc, char **argv) {
         fprintf(stderr, "\nPlease type the number of your chosen output MIDI device and press the Enter key.\n\n");
         scanf("%d", &k);
         fprintf(stderr, "\n");
-        for (i = 0, j = 1; i < pmdCount; ++i) {
+        for (i = 0, output_i = 1; i < pmdCount; ++i) {
             const PmDeviceInfo *pmdInfo = Pm_GetDeviceInfo(i);
             if (pmdInfo != NULL && pmdInfo->output != 0) {
-                if (j == k) {
+                if (output_i == k) {
                     pmDev = i;
                     break;
                 }
-                ++j;
+                ++output_i;
             }
         }
     }
