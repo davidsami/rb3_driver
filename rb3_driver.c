@@ -228,6 +228,10 @@ int main(int argc, char **argv) {
 
     libusb_device *dev =
         myusb_get_device_by_prod_name_prefix("Harmonix RB3 Keyboard", device_index);
+    if (dev == NULL) {
+        // Maybe we can locate device by Product ID?
+        dev = myusb_get_device_by_product_id(0x3330);
+    }
 
     if (dev == NULL) {
         fprintf(stderr, "Failed to find input device\n");
@@ -254,7 +258,11 @@ int main(int argc, char **argv) {
     libusb_device_handle *h = NULL;
     r = libusb_open(dev, &h);
     if (r < 0) {
-        fprintf(stderr, "Failed to open input device\n");
+        fprintf(stderr, "Failed to open input device, error code %d\n", r);
+        if (r == -3)
+        {
+            printf("try authorizing access to usb device, or re-running as sudo\n");
+        }
         SLEEP_IF_CHOOSEDEVICE();
         return r;
     }
