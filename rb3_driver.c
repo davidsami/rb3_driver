@@ -230,7 +230,7 @@ int main(int argc, char **argv) {
         myusb_get_device_by_prod_name_prefix("Harmonix RB3 Keyboard", device_index);
     if (dev == NULL) {
         // Maybe we can locate device by Product ID?
-        dev = myusb_get_device_by_product_id(0x3330);
+        dev = myusb_get_device_by_product_id(0x1bad, 0x3330);
     }
 
     if (dev == NULL) {

@@ -78,7 +78,7 @@ libusb_device *myusb_get_device_by_prod_name_prefix(const char *prefix, int inde
     return result;
 }
 
-libusb_device *myusb_get_device_by_product_id(const int product_id) {
+libusb_device *myusb_get_device_by_product_id(const int vendor_id, const int product_id) {
 
     libusb_device **devs;
     ssize_t cnt = libusb_get_device_list(NULL, &devs);
@@ -101,7 +101,7 @@ libusb_device *myusb_get_device_by_product_id(const int product_id) {
             continue;
         }
         
-        if (desc.idProduct == product_id)
+        if (desc.idVendor == vendor_id && desc.idProduct == product_id)
         {
             result = devs[i];
         }
