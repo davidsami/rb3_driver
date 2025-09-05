@@ -78,6 +78,46 @@ libusb_device *myusb_get_device_by_prod_name_prefix(const char *prefix, int inde
     return result;
 }
 
+libusb_device *myusb_get_device_by_product_id(const int vendor_id, const int product_id) {
+
+    libusb_device **devs;
+    ssize_t cnt = libusb_get_device_list(NULL, &devs);
+    if (cnt < 0) {
+        fprintf(stderr, "Failed to get device list\n");
+        return NULL;
+    }
+
+    ssize_t i;
+    struct libusb_device_descriptor desc;
+    libusb_device_handle *h;
+    libusb_device *result = NULL;
+    char prodName[MAX_PRODUCT_LEN];
+    int r;
+    for (i = 0; i < cnt && !result; i++) {
+        r = libusb_get_device_descriptor(devs[i], &desc);
+        if (r < 0)
+        {
+            printf("can't get device descriptor, error code %d\n", r);
+            continue;
+        }
+        
+        if (desc.idVendor == vendor_id && desc.idProduct == product_id)
+        {
+            result = devs[i];
+        }
+    }
+
+    if (result != NULL) {
+        // Increase reference count of device before freeing list.
+        libusb_ref_device(result);
+        my_atexit(myusb_unref_device, result);
+    }
+
+    libusb_free_device_list(devs, 1);
+
+    return result;
+}
+
 const struct libusb_endpoint_descriptor *
 myusb_get_endpoint(libusb_device *dev, uint8_t direction,
              uint8_t attrs_mask, uint8_t attrs, int index,
