@@ -4,8 +4,7 @@ RB3 Wireless MIDI Keyboard Driver
 This is a user-mode "driver" for the Harmonix Rock Band 3 wireless MIDI
 keyboard ("keytar") in wireless mode.
 
-So far, it has only been tested with the Wii version of the keytar, although I
-see no reason in principle why most functionality should not work with the
+So far, it has only been tested with the Wii version of the keytar, although there's reason in principle why most functionality should not work with the
 other versions.
 
 Please see the bottom of this document for licensing and disclaimers.
@@ -34,58 +33,42 @@ interface of your choosing.
 
 To use the driver's output as input to another program, you need some way of
 patching the MIDI "Out" of this program to the MIDI "In" of the other program.
-On Windows, this can be done using MIDI Yoke (http://www.midiox.com).  On Linux
-or Mac OS X, you can probably use Jack (and I believe Jack 2 supports Windows
-as well).  However, so far I haven't tried it with anything apart from MIDI
-Yoke.
-
-If you do use MIDI Yoke (on Windows), bear in mind that you do *not* need to
-manually create a patch using MIDI-OX.  In fact, if you do this, it will not
-work properly.  [I found this out the hard way. :-)]  Simply use the MIDI Yoke
-"Out" and "In" devices with corresponding numbers, and it should work.
+On Linux, you can use ALSA. On Windows, this can be done using MIDI Yoke
+(http://www.midiox.com).
 
 
 Do I need to install it / is it complicated to use?
 ---------------------------------------------------
 
-No, it's just a normal program.  The simplest way to use it (on Windows) is
-just to expand the zip file to a folder, then double-click "rb3_driver" in the
-folder.  You will be presented with a numbered list of MIDI output devices.
+No, it's just a normal program.
+
+Upon running rb3_driver, you will be presented with a numbered list of MIDI output devices.
 Just type the number of your chosen output device, and press the Enter key on
 your keyboard.  If something goes wrong, the program will display an error
 message, then exit automatically after a few seconds.  To close the program at
-any time, just close the window.  While in use, you can minimise the program in
+any time, just press Control-c or close the window .  While in use, you can minimise the program in
 the normal way if you want to avoid cluttering up your screen.
 
 It should automatically detect the correct USB (input) device, provided that
 the keytar dongle is plugged in.
 
-Most systems will have at least one built-in MIDI output device that
-corresponds to your sound card's or operating system's built-in MIDI
-synthesizer.  However, this will usually be of low quality, and you will
-probably want to connect it to something else.  If you install MIDI Yoke on
-Windows, it provides a set of 8 virtual MIDI output devices that send all their
-data to the corresponding virtual MIDI input device (which has the same number
-but "In" instead of "Out").  This works exactly like a digital patch cable.
-You can set up your synthesizer or sequencer program to use this as its input.
-
 
 What are the dependencies / how do I compile it?
 ------------------------------------------------
 
-If you are using Windows, the good news is that you don't have to compile it
-yourself.  A ready-compiled version of the program (with dependencies included)
-is available from https://github.com/martinjos/rb3_driver/releases
-
-So far, I have only compiled it under MinGW32/MSYS.  However, it should in
-principle work just as well on Linux or even (possibly) Mac OS X.
+This fork has been successfully compiled under Linux and Windows (using MinGW32/MSYS).
 
 The main dependencies are libusb (http://libusb.org/) and PortMidi
 (http://portmedia.sourceforge.net/portmidi/).
 
+On Linux, you can install them with aptitude:
+
+```sh
+sudo apt install libusb-1.0-0-dev libportmidi-dev
+```
+
 Once you have those in place (and your C compiler/build system obviously!),
-just type "make".  (I think this may require GNU make - if it doesn't work, it
-should be simple enough to adapt the Makefile.)
+just type "make".
 
 
 How much of the keytar's functionality is implemented?
@@ -114,7 +97,7 @@ LED output is so far not implemented.
 License
 -------
 
-Copyright (c) 2015 Martin Sidaway
+Original Copyright (c) 2015 Martin Sidaway
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -138,7 +121,7 @@ SOFTWARE.
 Additional legal disclaimers
 ----------------------------
 
-The author can not be held responsible for the content, safety, security,
+The authors can not be held responsible for the content, safety, security,
 freeness from bugs or viruses, or fitness-for-purpose of websites
 mentioned/linked to from this file/this repository, nor of the third-party
 programs and libraries mentioned here or anywhere in this repository (even
@@ -146,15 +129,14 @@ those mentioned as dependencies).  If you download, install, or otherwise use
 any of these programs and libraries, or visit any of the websites, you do so
 entirely at your own risk.
 
-The author of this software is not associated or affiliated with Harmonix Music
+The authors of this software are not associated or affiliated with Harmonix Music
 Systems, Inc., or Nintendo Co., Ltd. and this software is not in any way
 endorsed or approved by those companies or their subsidiaries/associates.
 
-The author takes no responsibility for any attempt to use this software with
+The authors take no responsibility for any attempt to use this software with
 Harmonix and/or Nintendo products, and provides no guarantee or affirmation
 that it is legal to do so in your jurisdiction.
 
 Harmonix and Rock Band are trademarks of Harmonix Music Systems, Inc.  Nintendo
-and Wii are trademarks of Nintendo Co., Ltd.  The author does not claim any
+and Wii are trademarks of Nintendo Co., Ltd.  The authors do not claim any
 rights over those trademarks.
-
