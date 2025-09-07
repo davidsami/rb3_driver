@@ -46,7 +46,7 @@ Upon running rb3_driver, you will be presented with a numbered list of MIDI outp
 Just type the number of your chosen output device, and press the Enter key on
 your keyboard.  If something goes wrong, the program will display an error
 message, then exit automatically after a few seconds.  To close the program at
-any time, just press Control-c or close the window .  While in use, you can minimise the program in
+any time, just press Control-c or close the window.  While in use, you can minimise the program in
 the normal way if you want to avoid cluttering up your screen.
 
 It should automatically detect the correct USB (input) device, provided that
