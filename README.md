@@ -33,8 +33,8 @@ interface of your choosing.
 
 To use the driver's output as input to another program, you need some way of
 patching the MIDI "Out" of this program to the MIDI "In" of the other program.
-On Linux, you can use ALSA. On Windows, this can be done using MIDI Yoke
-(http://www.midiox.com).
+On Linux, you can use ALSA. On modern Windows, you can use loopMIDI.
+On Windows Vista and earlier, this can be done using [MIDI Yoke](http://www.midiox.com).
 
 
 Do I need to install it / is it complicated to use?
@@ -56,7 +56,7 @@ the keytar dongle is plugged in.
 What are the dependencies / how do I compile it?
 ------------------------------------------------
 
-This fork has been successfully compiled under Linux and Windows (using MinGW32/MSYS).
+This fork has been successfully compiled under Linux and Windows (using MSYS2 for 64-bit systems, or MSYS and MinGW32 for 32-bit systems).
 
 The main dependencies are libusb (http://libusb.org/) and PortMidi
 (http://portmedia.sourceforge.net/portmidi/).
@@ -65,6 +65,12 @@ On Linux, you can install them with aptitude:
 
 ```sh
 sudo apt install libusb-1.0-0-dev libportmidi-dev
+```
+
+On Windows MSYS2, you can install them with pacman. For example, to install them in the CLANG64 environment,
+
+```sh
+pacman -S mingw-w64-clang-x86_64-libusb mingw-w64-clang-x86_64-portmidi
 ```
 
 Once you have those in place (and your C compiler/build system obviously!),
