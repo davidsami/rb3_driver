@@ -27,7 +27,7 @@
 #include <stdlib.h>
 #include <portmidi.h>
 
-#ifdef _POSIX_SOURCE
+#if defined(_POSIX_SOURCE) || defined(__APPLE__)
     #include <unistd.h>
 #endif
 

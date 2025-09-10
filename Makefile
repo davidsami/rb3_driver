@@ -1,6 +1,7 @@
 LIBUSB_FLAGS = $(shell pkg-config libusb-1.0 --libs --cflags)
-CCFLAGS += $(LIBUSB_FLAGS)
-LDLIBS += $(LIBUSB_FLAGS) -lportmidi
+LIBPORTMIDI_FLAGS = $(shell pkg-config portmidi --libs --cflags)
+CCFLAGS += $(LIBUSB_FLAGS) $(LIBPORTMIDI_FLAGS)
+LDLIBS += $(LIBUSB_FLAGS) $(LIBPORTMIDI_FLAGS) -lportmidi
 
 all: rb3_driver
 

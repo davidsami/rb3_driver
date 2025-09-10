@@ -73,6 +73,11 @@ On Windows MSYS2, you can install them with pacman. For example, to install them
 pacman -S mingw-w64-clang-x86_64-libusb mingw-w64-clang-x86_64-portmidi
 ```
 
+On macOS and homebrew:
+```zsh
+brew install libusb portmidi
+```
+
 Once you have those in place (and your C compiler/build system obviously!),
 just type "make".
 
