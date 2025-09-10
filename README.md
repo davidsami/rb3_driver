@@ -35,6 +35,7 @@ To use the driver's output as input to another program, you need some way of
 patching the MIDI "Out" of this program to the MIDI "In" of the other program.
 On Linux, you can use ALSA. On modern Windows, you can use loopMIDI.
 On Windows Vista and earlier, this can be done using [MIDI Yoke](http://www.midiox.com).
+Finally, on macOS you can use Audio MIDI Setup app (in Utilities.)
 
 
 Do I need to install it / is it complicated to use?
@@ -58,8 +59,7 @@ What are the dependencies / how do I compile it?
 
 This fork has been successfully compiled under Linux and Windows (using MSYS2 for 64-bit systems, or MSYS and MinGW32 for 32-bit systems).
 
-The main dependencies are libusb (http://libusb.org/) and PortMidi
-(http://portmedia.sourceforge.net/portmidi/).
+The main dependencies are [libusb](http://libusb.org/) and [PortMidi](http://portmedia.sourceforge.net/portmidi/).
 
 On Linux, you can install them with aptitude:
 
