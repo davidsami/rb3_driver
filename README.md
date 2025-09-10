@@ -35,7 +35,7 @@ To use the driver's output as input to another program, you need some way of
 patching the MIDI "Out" of this program to the MIDI "In" of the other program.
 On Linux, you can use ALSA. On modern Windows, you can use loopMIDI.
 On Windows Vista and earlier, this can be done using [MIDI Yoke](http://www.midiox.com).
-Finally, on macOS you can use Audio MIDI Setup app (in Utilities.)
+Finally, on macOS you don't need to install anything else… Core Audio is built-in, and GarageBand can be used for MIDI output (although note that you'll have to pick GarageBand's "Virtual *In*", to connnect.)
 
 
 Do I need to install it / is it complicated to use?
