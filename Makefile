@@ -1,7 +1,13 @@
+UNAME := $(shell uname -s)
+
 LIBUSB_FLAGS = $(shell pkg-config libusb-1.0 --libs --cflags)
-LIBPORTMIDI_FLAGS = $(shell pkg-config portmidi --libs --cflags)
-CCFLAGS += $(LIBUSB_FLAGS) $(LIBPORTMIDI_FLAGS)
-LDLIBS += $(LIBUSB_FLAGS) $(LIBPORTMIDI_FLAGS) -lportmidi
+CCFLAGS += $(LIBUSB_FLAGS)
+LDLIBS += $(LIBUSB_FLAGS) -lportmidi
+
+ifeq ($(UNAME),Darwin)
+    LIBPORTMIDI_FLAGS = $(shell pkg-config portmidi --libs --cflags)
+    CCFLAGS += $(LIBPORTMIDI_FLAGS)
+endif
 
 all: rb3_driver
 
